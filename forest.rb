@@ -3,8 +3,8 @@ require "language/go"
 class Forest < Formula
   desc "For the forest on your computer"
   homepage "https://github.com/robinmitra/forest"
-  url "https://github.com/robinmitra/forest/archive/v0.1.1.tar.gz"
-  sha256 "65884205a637f3a98b4ec84b6fce029b959bbe48bf3e3505c2cca9418d994d4f"
+  url "https://github.com/robinmitra/forest/archive/v0.2.0.tar.gz"
+  sha256 "c19a5b03092ca520a2986fc8eb254f5deaac7d54e9ccfa226b12f1b75e415407"
 
   depends_on "go" => :build
 
@@ -46,21 +46,29 @@ class Forest < Formula
   def install
     ENV["GOPATH"] = buildpath
 
-    bin_path = buildpath/"src/github.com/robinmitra/forest"
+    bin_path = buildpath / "src/github.com/robinmitra/forest"
     # Copy all files from their current location (GOPATH root) to
     # $GOPATH/src/github.com/robinmitra/forest
     bin_path.install Dir["*"]
 
+    ohai "Staging dependencies"
+
     # Stage dependencies. This requires the "require language/go" line above.
-    Language::Go.stage_deps resources, buildpath/"src"
+    Language::Go.stage_deps resources, buildpath / "src"
+
+    ohai "Building Forest"
 
     cd bin_path do
       # Install the compiled binary into Homebrew's `bin` - a pre-existing# global variable
-      system "go", "build", "-o", bin/"forest", "."
+      system "go", "build", "-o", bin / "forest", "."
     end
+
+    ohai "Done!"
   end
 
   test do
-
+    # "2>&1" redirects standard error to stdout. The "2" at the end means "the
+    # exit code should be 2".
+    assert_match "forest 0.2.0", shell_output("#{bin}/forest version 2>&1", 0)
   end
 end
