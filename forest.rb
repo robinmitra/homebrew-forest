@@ -1,5 +1,3 @@
-require "language/go"
-
 class Forest < Formula
   desc "For the forest on your computer"
   homepage "https://github.com/robinmitra/forest"
@@ -30,6 +28,6 @@ class Forest < Formula
   test do
     # "2>&1" redirects standard error to stdout. The "2" at the end means "the
     # exit code should be 2".
-    assert_match "forest 0.2.0", shell_output("#{bin}/forest version 2>&1", 0)
+    assert_match "forest 0.2.0", shell_output("#{bin}/forest version 2>&1")
   end
 end
