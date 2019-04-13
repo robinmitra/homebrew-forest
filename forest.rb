@@ -1,8 +1,8 @@
 class Forest < Formula
-  desc "For the forest on your computer"
+  desc "For the forest on your computer."
   homepage "https://github.com/robinmitra/forest"
-  url "https://github.com/robinmitra/forest/archive/v0.2.1.tar.gz"
-  sha256 "d39eeb97fab692ccf7795fc6fbb596315ff2c820e861f05c7f3ce20d07d87cc5"
+  url "https://github.com/robinmitra/forest/archive/v0.2.2.tar.gz"
+  sha256 "b251ddd5081ab5083cdcfc559179bdbee04250e8fc059cefc190c0f98909cf5b"
 
   depends_on "go" => :build
 
@@ -28,6 +28,6 @@ class Forest < Formula
   test do
     # "2>&1" redirects standard error to stdout. The "2" at the end means "the
     # exit code should be 2".
-    assert_match "forest 0.2.0", shell_output("#{bin}/forest version 2>&1")
+    assert_match "forest 0.2.2", shell_output("#{bin}/forest version 2>&1")
   end
 end
